@@ -71,25 +71,29 @@ namespace MVCforPasswordSaver.Controllers
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult Edit(String name)
         {
-            return View();
+            User u = new User();
+            foreach (var item in user)
+            {
+                if(item.name == name)
+                {
+                    u = item;
+                    user.Remove(item);
+                    break;
+                }
+            }
+            return View(u);
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit( User u)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            user.Add(u);
+             return RedirectToAction("View");
         }
 
         // GET: User/Delete/5
