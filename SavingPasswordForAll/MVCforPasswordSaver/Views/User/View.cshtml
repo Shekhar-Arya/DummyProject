@@ -1,0 +1,21 @@
+﻿@model List<MVCforPasswordSaver.Models.User>
+@{
+    ViewBag.Title = "View";
+}
+
+@Html.ActionLink("Create New", "Create")
+<h2>View</h2>
+<table>
+    <tr>
+        <th>@Html.DisplayName("Name")</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelitem=>item.name)</td>
+        </tr>
+    }
+    <tr>
+
+    </tr>
+</table>
