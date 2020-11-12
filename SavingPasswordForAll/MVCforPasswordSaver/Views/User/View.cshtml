@@ -23,9 +23,10 @@
             @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  name=item.name  }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { name = item.name }) |
+            @Html.ActionLink("Details", "Detail", new { name = item.name }) |
+            @Html.ActionLink("Delete", "Delete", new { name = item.name }) |
+            @Html.ActionLink("Add", "Add", new { name = item.name })
         </td>
     </tr>
 }

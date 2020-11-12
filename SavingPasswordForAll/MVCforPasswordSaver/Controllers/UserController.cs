@@ -20,7 +20,8 @@ namespace MVCforPasswordSaver.Controllers
             client = new HttpClient();
             client.BaseAddress = baseAddress;
         }
-        static List<User> user = new List<User>(); 
+        static List<User> user = new List<User>();
+        static String temp;
         // GET: User
         [HttpGet]
         public new ActionResult View()
@@ -97,25 +98,99 @@ namespace MVCforPasswordSaver.Controllers
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        //public ActionResult Delete()
+        //{
+
+//            return View("View", user);
+  //      }
+
+        // Get: User/Delete/5
+        [HttpGet]
+        public ActionResult Delete(String name)
         {
-            return View();
+            foreach (var item in user)
+            {
+                if (item.name == name)
+                {
+                    user.Remove(item);
+                    
+                    break;
+                }
+            }
+            return RedirectToAction("View");
+        }
+        [HttpGet]
+        public ActionResult Detail(String name)
+        {
+            User u = new User();
+            foreach (var item in user)
+            {
+                if(item.name == name)
+                {
+                    u = item;
+                    temp = name;
+                }
+            }
+
+            return View(u.passwordSaver);
+        }
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View(new UserPassword());
         }
 
-        // POST: User/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Add(string name, UserPassword a)
         {
-            try
+            foreach (var item in user)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if(item.name == name)
+                {
+                    item.passwordSaver.Add(a);
+                    break;
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("View");
         }
+
+        [HttpGet]
+        public ActionResult Change(String web)
+        {
+            UserPassword a = new UserPassword();
+            foreach (var item in user)
+            {
+                if (item.name==temp)
+                {
+                    foreach (var item1 in item.passwordSaver)
+                    {
+                        if(item1.website == web)
+                        {
+                            a = item1;
+                            item.passwordSaver.Remove(item1);
+                            break;
+                        }
+                        
+                    }
+                    break;
+                }
+            }
+            return View(a);
+        }
+
+        [HttpPost]
+        public ActionResult Change(UserPassword a)
+        {
+            foreach (var item in user)
+            {
+                if(item.name == temp)
+                {
+                    item.passwordSaver.Add(a);
+                    break;
+                }
+            }
+            return RedirectToAction("View");
+        }
+
     }
 }
