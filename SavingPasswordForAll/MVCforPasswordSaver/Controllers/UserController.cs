@@ -143,15 +143,17 @@ namespace MVCforPasswordSaver.Controllers
         [HttpPost]
         public ActionResult Add(string name, UserPassword a)
         {
+            List<UserPassword> u = new List<UserPassword>();
             foreach (var item in user)
             {
-                if(item.name == name)
+                if(item.name == name || item.name == temp)
                 {
                     item.passwordSaver.Add(a);
+                    u = item.passwordSaver;
                     break;
                 }
             }
-            return RedirectToAction("View");
+            return View("Detail", u);
         }
 
         [HttpGet]
@@ -181,15 +183,40 @@ namespace MVCforPasswordSaver.Controllers
         [HttpPost]
         public ActionResult Change(UserPassword a)
         {
+            List<UserPassword> b = new List<UserPassword>();
             foreach (var item in user)
             {
                 if(item.name == temp)
                 {
                     item.passwordSaver.Add(a);
+                    b = item.passwordSaver;
                     break;
                 }
             }
-            return RedirectToAction("View");
+            return View("Detail", b);
+        }
+
+        [HttpGet]
+        public ActionResult Remove(String web)
+        {
+            List<UserPassword> a = new List<UserPassword>();
+            foreach (var item in user)
+            {
+                if(item.name == temp)
+                {
+                    foreach (var item1 in item.passwordSaver)
+                    {
+                        if(item1.website == web)
+                        {
+                            item.passwordSaver.Remove(item1);
+                            a = item.passwordSaver;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            return View("Detail", a);
         }
 
     }
