@@ -1,0 +1,46 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Add")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Website")
+        </th>
+        <th>
+            @Html.DisplayName("Username")
+        </th>
+        <th>
+            @Html.DisplayName("Password")
+        </th>
+        <th></th>
+    </tr>
+
+@for (int i = 0; i<Model.Rows.Count; i++) {
+    <tr>
+        <td>
+            @Model.Rows[i][2]
+        </td>
+        <td>
+            @Model.Rows[i][3]
+        </td>
+        <td>
+            @Model.Rows[i][4]
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Change", new { id=Model.Rows[i][0] }) |
+            @Html.ActionLink("Delete", "Remove", new { id= Model.Rows[i][0] })
+        </td>
+    </tr>
+}
+
+</table>
+
+@Html.ActionLink("Back to Index","Index")
